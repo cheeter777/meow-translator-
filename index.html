@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meow Translator - Understand Your Feline Friend</title>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Comic Sans MS', cursive, sans-serif;
+      }
+
+      body {
+          background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+          color: #333;
+          line-height: 1.6;
+          min-height: 100vh;
+          padding: 20px;
+      }
+
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+
+      header {
+          text-align: center;
+          padding: 30px 0;
+          background-color: rgba(255, 255, 255, 0.8);
+          border-radius: 20px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          margin-bottom: 30px;
+      }
+
+      h1 {
+          color: #ff6b6b;
+          font-size: 3rem;
+          margin-bottom: 10px;
+          text-shadow: 2px 2px 0 #ffeaa7;
+      }
+
+      .subtitle {
+          font-size: 1.2rem;
+          color: #636e72;
+          margin-bottom: 20px;
+      }
+
+      .cat-emoji {
+          font-size: 4rem;
+          display: block;
+          margin: 10px 0;
+      }
+
+      .translator-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 30px;
+          margin-bottom: 40px;
+      }
+
+      .input-section, .output-section {
+          flex: 1;
+          min-width: 300px;
+          background: white;
+          padding: 25px;
+          border-radius: 20px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+          color: #fd79a8;
+          margin-bottom: 20px;
+          text-align: center;
+          border-bottom: 2px dashed #ffeaa7;
+          padding-bottom: 10px;
+      }
+
+      .behavior-selector {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 15px;
+          margin-bottom: 25px;
+      }
+
+      .behavior-option {
+          background: #ffeaa7;
+          border: none;
+          border-radius: 50px;
+          padding: 12px 15px;
+          cursor: pointer;
+          text-align: center;
+          transition: all 0.3s;
+          font-weight: bold;
+          color: #2d3436;
+      }
+
+      .behavior-option:hover {
+          background: #fdcb6e;
+          transform: translateY(-3px);
+      }
+
+      .behavior-option.active {
+          background: #ff6b6b;
+          color: white;
+      }
+
+      .sound-selector {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 25px;
+          justify-content: center;
+      }
+
+      .sound-btn {
+          background: #a29bfe;
+          border: none;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          transition: all 0.3s;
+      }
+
+      .sound-btn:hover {
+          background: #6c5ce7;
+          transform: scale(1.1);
+      }
+
+      .translate-btn {
+          display: block;
+          width: 100%;
+          background: #ff6b6b;
+          color: white;
+          border: none;
+          border-radius: 50px;
+          padding: 15px;
+          font-size: 1.2rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s;
+          margin-top: 20px;
+      }
+
+      .translate-btn:hover {
+          background: #ff5252;
+          transform: translateY(-3px);
+          box-shadow: 0 5px 10px rgba(255, 107, 107, 0.4);
+      }
+
+      .output-box {
+          background: #f7f7f7;
+          border-radius: 15px;
+          padding: 20px;
+          min-height: 200px;
+          margin-top: 20px;
+          border: 2px dashed #ffeaa7;
+      }
+
+      .translation-result {
+          font-size: 1.3rem;
+          text-align: center;
+          margin: 20px 0;
+          color: #2d3436;
+      }
+
+      .cat-image {
+          width: 100%;
+          max-width: 300px;
+          display: block;
+          margin: 0 auto;
+          border-radius: 20px;
+      }
+
+      .dictionary-section {
+          background: white;
+          padding: 25px;
+          border-radius: 20px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          margin-bottom: 40px;
+      }
+
+      .dictionary-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+          margin-top: 20px;
+      }
+
+      .dictionary-item {
+          background: #dfe6e9;
+          padding: 15px;
+          border-radius: 10px;
+          border-left: 5px solid #fd79a8;
+      }
+
+      .dictionary-item h3 {
+          color: #e84393;
+          margin-bottom: 10px;
+      }
+
+      footer {
+          text-align: center;
+          padding: 20px;
+          color: #636e72;
+          font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+          .translator-container {
+              flex-direction: column;
+          }
+
+          h1 {
+              font-size: 2.2rem;
+          }
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="cat-emoji">🐱</span>
+    <h1>Meow Translator</h1>
+    <p class="subtitle">Finally understand what your feline friend is trying to tell you!</p>
+  </header>
+
+  <div class="translator-container">
+    <div class="input-section">
+      <h2>What is your cat doing?</h2>
+
+      <div class="behavior-selector">
+        <button class="behavior-option" data-behavior="purring">Purring 😌</button>
+        <button class="behavior-option" data-behavior="meowing">Meowing 🗣️</button>
+        <button class="behavior-option" data-behavior="kneading">Kneading 🐾</button>
+        <button class="behavior-option" data-behavior="tail-up">Tail Up 🐈</button>
+        <button class="behavior-option" data-behavior="blinking">Slow Blinking 😽</button>
+        <button class="behavior-option" data-behavior="hissing">Hissing 😾</button>
+        <button class="behavior-option" data-behavior="belly-up">Belly Up 🐱</button>
+        <button class="behavior-option" data-behavior="scratching">Scratching 🪵</button>
+      </div>
+
+      <h2>What sound is your cat making?</h2>
+
+      <div class="sound-selector">
+        <button class="sound-btn" data-sound="short-meow">😺</button>
+        <button class="sound-btn" data-sound="multiple-meows">😸</button>
+        <button class="sound-btn" data-sound="long-meow">😹</button>
+        <button class="sound-btn" data-sound="high-pitched">😻</button>
+        <button class="sound-btn" data-sound="low-meow">😼</button>
+        <button class="sound-btn" data-sound="chirping">😽</button>
+      </div>
+
+      <button class="translate-btn" id="translateBtn">Translate My Cat!</button>
+    </div>
+
+    <div class="output-section">
+      <h2>Translation Result</h2>
+      <div class="output-box">
+        <p class="translation-result" id="translationResult">Select a behavior or sound to get started!</p>
+        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Cute cat" class="cat-image">
+      </div>
+    </div>
+  </div>
+
+  <div class="dictionary-section">
+    <h2>Cat Language Dictionary</h2>
+    <div class="dictionary-grid">
+      <div class="dictionary-item">
+        <h3>Purring 😌</h3>
+        <p>Usually means contentment, but can also indicate pain or distress in some situations.</p>
+      </div>
+      <div class="dictionary-item">
+        <h3>Kneading 🐾</h3>
+        <p>A sign of comfort and happiness, reminiscent of kittenhood nursing behavior.</p>
+      </div>
+      <div class="dictionary-item">
+        <h3>Slow Blinking 😽</h3>
+        <p>A "cat kiss" showing trust and affection. Try slow blinking back!</p>
+      </div>
+      <div class="dictionary-item">
+        <h3>Tail Up 🐈</h3>
+        <p>A greeting and sign of friendship when your cat approaches you with tail raised.</p>
+      </div>
+      <div class="dictionary-item">
+        <h3>Short Meow 😺</h3>
+        <p>A standard greeting, like "Hello!" or "Hey there!"</p>
+      </div>
+      <div class="dictionary-item">
+        <h3>Multiple Meows 😸</h3>
+        <p>Excited greeting, usually when you've been away for a while.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Disclaimer: This translator is for entertainment purposes. Results are not scientifically verified.</p>
+    <p>Made with ❤️ for cat lovers everywhere</p>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const behaviorOptions = document.querySelectorAll('.behavior-option');
+    const soundButtons = document.querySelectorAll('.sound-btn');
+    const translateBtn = document.getElementById('translateBtn');
+    const translationResult = document.getElementById('translationResult');
+
+    let selectedBehavior = null;
+    let selectedSound = null;
+
+    // Behavior selection
+    behaviorOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        behaviorOptions.forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        selectedBehavior = this.getAttribute('data-behavior');
+      });
+    });
+
+    // Sound selection
+    soundButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        soundButtons.forEach(btn => btn.style.backgroundColor = '#a29bfe');
+        this.style.backgroundColor = '#6c5ce7';
+        selectedSound = this.getAttribute('data-sound');
+      });
+    });
+
+    // Translation logic
+    translateBtn.addEventListener('click', function() {
+      let translation = "Hmm, I'm not sure what your cat is saying. Try selecting a behavior or sound!";
+
+      if (selectedBehavior || selectedSound) {
+        translation = generateTranslation(selectedBehavior, selectedSound);
+      }
+
+      translationResult.textContent = translation;
+
+      // Add a fun animation
+      translationResult.style.transform = 'scale(1.05)';
+      setTimeout(() => {
+        translationResult.style.transform = 'scale(1)';
+      }, 300);
+    });
+
+    function generateTranslation(behavior, sound) {
+      const behaviorTranslations = {
+        'purring': "I'm happy and content! This is my safe space.",
+        'meowing': "Hey human, pay attention to me! I need something.",
+        'kneading': "This reminds me of being a kitten with my mom. I feel safe and loved.",
+        'tail-up': "Hello friend! I'm happy to see you and I trust you.",
+        'blinking': "I love and trust you. You're part of my family.",
+        'hissing': "Back off! I'm scared or angry. Give me space.",
+        'belly-up': "I feel super safe with you! But this isn't always an invitation for belly rubs.",
+        'scratching': "This is my territory! I'm marking it with my scent."
+      };
+
+      const soundTranslations = {
+        'short-meow': "Hi there! Just checking in.",
+        'multiple-meows': "I'm so excited to see you! Where have you been?",
+        'long-meow': "I really need something - probably food or attention!",
+        'high-pitched': "This is urgent! Help me with something important!",
+        'low-meow': "I'm complaining about something. Life is hard!",
+        'chirping': "Look at that bird! I want to chase it so badly!"
+      };
+
+      let behaviorText = behavior ? behaviorTranslations[behavior] : "";
+      let soundText = sound ? soundTranslations[sound] : "";
+
+      if (behavior && sound) {
+        return `Based on the behavior and sound: ${behaviorText} Also, ${soundText.toLowerCase()}`;
+      } else if (behavior) {
+        return behaviorText;
+      } else if (sound) {
+        return soundText;
+      }
+
+      return "Hmm, I'm not sure what your cat is saying. Try selecting a behavior or sound!";
+    }
+  });
+</script>
+</body>
+</html>
